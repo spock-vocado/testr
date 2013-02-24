@@ -1,10 +1,8 @@
-package com.github.testbed.entity.builder;
+package com.github.testr.builder.extra;
 
-import com.github.testbed.builder.IDynamicBuilder;
-import com.github.testbed.entity.Address;
-import com.github.testbed.entity.Person;
+import com.github.testr.builder.IBuilder;
 
-public interface PersonBuilder extends IDynamicBuilder<Person> {
+public interface PersonBuilder extends IBuilder<Person> {
 
     PersonBuilder firstName(String firstName);
 
@@ -18,4 +16,5 @@ public interface PersonBuilder extends IDynamicBuilder<Person> {
 
     PersonBuilder address(AddressBuilder addressBuilder);
 
+    PersonBuilder active(Boolean active);
 }

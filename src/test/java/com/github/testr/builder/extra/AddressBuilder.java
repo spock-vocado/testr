@@ -1,9 +1,8 @@
-package com.github.testbed.entity.builder;
+package com.github.testr.builder.extra;
 
-import com.github.testbed.builder.IDynamicBuilder;
-import com.github.testbed.entity.Address;
+import com.github.testr.builder.IBuilder;
 
-public interface AddressBuilder extends IDynamicBuilder<Address> {
+public interface AddressBuilder extends IBuilder<Address> {
 
     AddressBuilder address1(String address1);
 

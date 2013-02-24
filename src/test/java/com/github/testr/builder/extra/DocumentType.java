@@ -1,4 +1,4 @@
-package com.github.testbed.entity;
+package com.github.testr.builder.extra;
 
 public class DocumentType {
 

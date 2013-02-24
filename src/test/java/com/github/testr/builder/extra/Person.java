@@ -1,4 +1,4 @@
-package com.github.testbed.entity;
+package com.github.testr.builder.extra;
 
 import java.util.Date;
 
@@ -9,6 +9,7 @@ public class Person {
     private Date dob;
     private String ssn;
     private Address address;
+    private Boolean active;
 
     public String getFirstName() {
         return firstName;
@@ -48,6 +49,14 @@ public class Person {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @Override

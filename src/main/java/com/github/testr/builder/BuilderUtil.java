@@ -1,4 +1,4 @@
-package com.github.testbed.builder;
+package com.github.testr.builder;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -1,17 +1,11 @@
-package com.github.testbed.builder;
+package com.github.testr.builder;
 
-public class DefaultHandler implements IHandler {
+public class DefaultObjectFactory implements IObjectFactory {
 
     @Override
     public Object newInstance(Class<?> objectClass) {
         Object v = BuilderUtil.newInstance(objectClass);
         System.out.println("NewInstance: " + objectClass.getName());
-        return v;
-    }
-
-    @Override
-    public Object postProcess(Object v) {
-        System.out.println("PostCreate: " + v);
         return v;
     }
 
