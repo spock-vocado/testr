@@ -12,7 +12,7 @@ import java.lang.reflect.Proxy;
 import java.util.Date;
 
 @SuppressWarnings("unchecked")
-public class ReflectionBuilderFactory implements IBuilderFactory {
+public class DynBuilderFactory implements IBuilderFactory {
 
     private ConfigurableConversionService conversionService = new DefaultConversionService();
     private IObjectFactory objFactory = new DefaultObjectFactory();

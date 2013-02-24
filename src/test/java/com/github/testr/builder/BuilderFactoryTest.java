@@ -3,7 +3,6 @@ package com.github.testr.builder;
 import com.github.testr.builder.extra.AddressBuilder;
 import com.github.testr.builder.extra.Person;
 import com.github.testr.builder.extra.PersonBuilder;
-import org.fest.assertions.api.Assertions;
 import org.testng.annotations.Test;
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -14,7 +13,7 @@ public class BuilderFactoryTest {
     @Test
     public void testBuilder() {
 
-        IBuilderFactory f = new ReflectionBuilderFactory();
+        IBuilderFactory f = new DynBuilderFactory();
 
         Person p = f.create(PersonBuilder.class)
                 .firstName("Antonio")
