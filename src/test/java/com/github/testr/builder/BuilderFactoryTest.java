@@ -19,6 +19,7 @@ public class BuilderFactoryTest {
                 .firstName("Antonio")
                 .ssn("00000000")
                 .active(true)
+                .dob("1969-01-01")
                 .address(f.create(AddressBuilder.class)
                         .address1("285 Bay st")
                         .city("Long Beach")
@@ -32,6 +33,7 @@ public class BuilderFactoryTest {
         assertThat(p.getActive()).isEqualTo(true);
         assertThat(p.getAddress()).isNotNull();
         assertThat(p.getAddress().getAddress1()).isEqualTo("285 Bay st");
+        assertThat(p.getDob()).isEqualTo("1969-01-01");
     }
 
 }

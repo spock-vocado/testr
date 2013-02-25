@@ -14,9 +14,4 @@ public interface IBuilder<T> {
      */
     T build();
 
-    /**
-     * Records all values as template.
-     */
-    void saveTemplate();
-
 }
