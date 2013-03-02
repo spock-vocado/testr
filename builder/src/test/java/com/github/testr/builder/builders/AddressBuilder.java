@@ -5,7 +5,7 @@ import com.github.testr.builder.IBuilder;
 import com.github.testr.builder.pojos.Address;
 import com.github.testr.builder.pojos.Person;
 
-@ChildOf(Person.class)
+@ChildOf(entityClass = Person.class, parentProperty = "person")
 public interface AddressBuilder extends IBuilder<Address> {
 
     AddressBuilder address1(String address1);

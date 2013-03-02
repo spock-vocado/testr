@@ -1,14 +1,34 @@
-package com.github.testr.builder.pojos;
+package com.github.testr.sample.model;
 
-public class Address {
+import org.springframework.data.jpa.domain.AbstractPersistable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+@Entity
+public class Address extends AbstractPersistable<Long> {
+
+    private static final long serialVersionUID = -2952735933715107252L;
+
+    @Column(nullable = false)
     private String address1;
+
     private String address2;
+
+    @Column(nullable = false)
     private String city;
-    private String country;
-    private String postalCode;
+
+    @Column(nullable = false)
     private String state;
-    private Person person;
+
+    @Column(nullable = false)
+    private String country;
+
+    @OneToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public String getAddress1() {
         return address1;
@@ -34,22 +54,6 @@ public class Address {
         this.city = city;
     }
 
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public void setPostalCode(String postalCode) {
-        this.postalCode = postalCode;
-    }
-
     public String getState() {
         return state;
     }
@@ -58,12 +62,20 @@ public class Address {
         this.state = state;
     }
 
-    public Person getPerson() {
-        return person;
+    public String getCountry() {
+        return country;
     }
 
-    public void setPerson(Person person) {
-        this.person = person;
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
@@ -73,8 +85,8 @@ public class Address {
         sb.append("{address1='").append(address1).append('\'');
         sb.append(", address2='").append(address2).append('\'');
         sb.append(", city='").append(city).append('\'');
+        sb.append(", state='").append(state).append('\'');
         sb.append(", country='").append(country).append('\'');
-        sb.append(", postalCode='").append(postalCode).append('\'');
         sb.append('}');
         return sb.toString();
     }

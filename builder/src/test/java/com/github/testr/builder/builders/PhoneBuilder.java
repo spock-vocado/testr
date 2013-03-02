@@ -5,7 +5,7 @@ import com.github.testr.builder.IBuilder;
 import com.github.testr.builder.pojos.Person;
 import com.github.testr.builder.pojos.Phone;
 
-@ChildOf(Person.class)
+@ChildOf(entityClass = Person.class, parentProperty = "person")
 public interface PhoneBuilder extends IBuilder<Phone> {
 
     PhoneBuilder type(String type);

@@ -7,5 +7,9 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @java.lang.annotation.Retention(RUNTIME)
 @java.lang.annotation.Documented
 public @interface ChildOf {
-    Class<?> value();
+
+    Class<?> entityClass();
+
+    String parentProperty();
+
 }

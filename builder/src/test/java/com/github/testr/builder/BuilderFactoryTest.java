@@ -4,11 +4,14 @@ import com.github.testr.builder.builders.InvalidPersonBuilder;
 import com.github.testr.builder.builders.PersonBuilder;
 import com.github.testr.builder.builders.PhoneBuilder;
 import com.github.testr.builder.builders.ProductBuilder;
-import com.github.testr.builder.jpa.AbstractJpaBuilderHandler;
+import com.github.testr.builder.jpa.JpaBuilderHandler;
 import com.github.testr.builder.builders.AddressBuilder;
 import com.github.testr.builder.pojos.Person;
+import org.mockito.Mockito;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import javax.persistence.EntityManager;
 
 import static com.github.testr.builder.BuilderHelper.begin;
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -19,14 +22,8 @@ public class BuilderFactoryTest {
     @BeforeMethod
     public void init() {
         BuilderFactory factory = new BuilderFactory();
-        factory.setHandler(new AbstractJpaBuilderHandler() {
-            @Override
-            protected Object persist(Object o) {
-                log.debug("Persisting " + o);
-                return o;
-            }
-        });
-        BuilderHelper.setFactory(factory);
+        factory.setHandler(new JpaBuilderHandler(Mockito.mock(EntityManager.class)));
+        BuilderHelper.setBuilderFactory(factory);
     }
 
     @Test(expectedExceptions = BuilderException.class,

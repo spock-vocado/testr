@@ -8,19 +8,17 @@ public class DefaultBuilderHandler implements IBuilderHandler {
     private static final Log log = LogFactory.getLog(DefaultBuilderHandler.class);
 
     @Override
-    public Object newInstance(BuilderContext context) {
+    public void newInstance(BuilderContext context) {
         log.debug("Creating new instance of " + context.getObjectClass().getName());
-        return BuilderUtil.newInstance(context.getObjectClass());
+        context.setValue(BuilderUtil.newInstance(context.getObjectClass()));
     }
 
     @Override
-    public Object preProcess(Object o, BuilderContext context) {
-        return o;
+    public void preProcess(BuilderContext context) {
     }
 
     @Override
-    public Object postProcess(Object o, BuilderContext context) {
-        return o;
+    public void postProcess(BuilderContext context) {
     }
 
 }

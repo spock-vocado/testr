@@ -2,11 +2,12 @@ package com.github.testr.builder.pojos;
 
 import com.github.testr.builder.jpa.ChildOf;
 
-@ChildOf(Person.class)
+@ChildOf(entityClass = Person.class, parentProperty = "foo")
 public class Phone {
 
     private String number;
     private String type;
+    private Person person;
 
     public String getNumber() {
         return number;
@@ -22,6 +23,14 @@ public class Phone {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
     }
 
     @Override

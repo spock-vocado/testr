@@ -21,7 +21,15 @@ public class BuilderFactory {
     private static final Log log = LogFactory.getLog(BuilderFactory.class);
 
     private ConfigurableConversionService conversionService = new DefaultConversionService();
-    private IBuilderHandler handler = new DefaultBuilderHandler();
+    private IBuilderHandler handler;
+
+    public BuilderFactory(IBuilderHandler handler) {
+        this.handler = handler;
+    }
+
+    public BuilderFactory() {
+        this(new DefaultBuilderHandler());
+    }
 
     public ConfigurableConversionService getConversionService() {
         return conversionService;
@@ -53,31 +61,32 @@ public class BuilderFactory {
 
     private class BuilderInvocationHandler implements InvocationHandler {
 
-        private final Object v;
-        private final BuilderContext info;
+        private final BuilderContext ctx;
 
-        BuilderInvocationHandler(BuilderContext info) {
-            this.info = info;
-            this.v = handler.preProcess(handler.newInstance(this.info), this.info);
+        BuilderInvocationHandler(BuilderContext ctx) {
+            this.ctx = ctx;
+            handler.newInstance(ctx);
+            handler.preProcess(ctx);
         }
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
             if (method.getName().equals("build")) {
-                return handler.postProcess(v, info);
+                handler.postProcess(ctx);
+                return ctx.getValue();
             }
-            if (method.getDeclaringClass() == info.getBuilderClass()) {
+            if (method.getDeclaringClass() == ctx.getBuilderClass()) {
                 String name = method.getName();
                 Object value = args[0];
-                Field f = ReflectionUtils.findField(info.getObjectClass(), name);
+                Field f = ReflectionUtils.findField(ctx.getObjectClass(), name);
                 if (f == null)
                     throw new BuilderException("Could not find field '" + name + "' in class "
-                            + info.getObjectClass().getName());
+                            + ctx.getObjectClass().getName());
                 f.setAccessible(true);
                 Object convertedValue = convert(f.getType(), value);
                 if (log.isDebugEnabled())
                     log.debug(format("Set field '%s' = %s", name, String.valueOf(convertedValue)));
-                ReflectionUtils.setField(f, v, convertedValue);
+                ReflectionUtils.setField(f, ctx.getValue(), convertedValue);
                 return proxy;
             }
             return proxy;

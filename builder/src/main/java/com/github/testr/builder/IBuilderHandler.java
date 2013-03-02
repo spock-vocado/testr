@@ -2,10 +2,10 @@ package com.github.testr.builder;
 
 public interface IBuilderHandler {
 
-    Object newInstance(BuilderContext context);
+    void newInstance(BuilderContext context);
 
-    Object preProcess(Object o, BuilderContext context);
+    void preProcess(BuilderContext context);
 
-    Object postProcess(Object o, BuilderContext context);
+    void postProcess(BuilderContext context);
 
 }
