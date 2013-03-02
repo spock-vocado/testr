@@ -1,8 +1,10 @@
 package com.github.testr.builder;
 
-import com.github.testr.builder.extra.AddressBuilder;
-import com.github.testr.builder.extra.Person;
-import com.github.testr.builder.extra.PersonBuilder;
+import com.github.testr.builder.jpa.AbstractJpaObjectHandler;
+import com.github.testr.builder.pojos.AddressBuilder;
+import com.github.testr.builder.pojos.Person;
+import com.github.testr.builder.pojos.PersonBuilder;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.fest.assertions.api.Assertions.assertThat;
@@ -10,21 +12,43 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 public class BuilderFactoryTest {
 
+    private DynBuilderFactory bf;
+
+    @BeforeMethod
+    public void init() {
+        bf = new DynBuilderFactory();
+        bf.setHandler(new AbstractJpaObjectHandler() {
+            @Override
+            protected Object persist(Object o) {
+                log.debug("Persisting " + o);
+                return o;
+            }
+        });
+    }
+
+    @Test(expectedExceptions = BuilderException.class, expectedExceptionsMessageRegExp = "Incorrect API usage.+")
+    public void testDependent() {
+        bf.get(AddressBuilder.class)
+                .address1("285 Bay st")
+                .city("Long Beach")
+                .state("CA")
+                .country("USA")
+                .build();
+    }
+
     @Test
     public void testBuilder() {
-
-        IBuilderFactory f = new DynBuilderFactory();
-
-        Person p = f.create(PersonBuilder.class)
+        Person p = bf.get(PersonBuilder.class)
                 .firstName("Antonio")
                 .ssn("00000000")
                 .active(true)
                 .dob("1969-01-01")
-                .address(f.create(AddressBuilder.class)
+                .address(bf.get(AddressBuilder.class)
                         .address1("285 Bay st")
                         .city("Long Beach")
                         .state("CA")
-                        .country("USA"))
+                        .country("USA")
+                        .build())
                 .build();
 
         System.out.println("RESULT = " + p);

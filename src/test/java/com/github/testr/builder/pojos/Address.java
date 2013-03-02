@@ -1,4 +1,4 @@
-package com.github.testr.builder.extra;
+package com.github.testr.builder.pojos;
 
 public class Address {
 

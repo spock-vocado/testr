@@ -28,4 +28,8 @@ abstract class BuilderUtil {
         }
     }
 
+    public static Class<?> normalizeClass(Class<?> clazz) {
+        // todo: detect typical proxies (cglib, javassist, etc)
+        return clazz;
+    }
 }
