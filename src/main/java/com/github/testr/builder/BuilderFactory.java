@@ -16,12 +16,12 @@ import java.util.Date;
 import static java.lang.String.format;
 
 @SuppressWarnings("unchecked")
-public class DynBuilderFactory implements IBuilderFactory {
+public class BuilderFactory {
 
-    private static final Log log = LogFactory.getLog(DynBuilderFactory.class);
+    private static final Log log = LogFactory.getLog(BuilderFactory.class);
 
     private ConfigurableConversionService conversionService = new DefaultConversionService();
-    private IObjectHandler handler = new DefaultObjectHandler();
+    private IBuilderHandler handler = new DefaultBuilderHandler();
 
     public ConfigurableConversionService getConversionService() {
         return conversionService;
@@ -31,21 +31,20 @@ public class DynBuilderFactory implements IBuilderFactory {
         this.conversionService = conversionService;
     }
 
-    public IObjectHandler getHandler() {
+    public IBuilderHandler getHandler() {
         return handler;
     }
 
-    public void setHandler(IObjectHandler handler) {
+    public void setHandler(IBuilderHandler handler) {
         this.handler = handler;
     }
 
-    @Override
     public <T extends IBuilder<?>> T get(Class<T> builderClass) {
         Class<?> entityClass = (Class<?>) ((ParameterizedType) builderClass.getGenericInterfaces()[0]).getActualTypeArguments()[0];
         return (T) Proxy.newProxyInstance(
                 getLoader(),
                 new Class[]{builderClass},
-                new BuilderInvocationHandler(new BuilderInfo(builderClass, entityClass)));
+                new BuilderInvocationHandler(new BuilderContext(builderClass, entityClass, this)));
     }
 
     private ClassLoader getLoader() {
@@ -55,9 +54,9 @@ public class DynBuilderFactory implements IBuilderFactory {
     private class BuilderInvocationHandler implements InvocationHandler {
 
         private final Object v;
-        private final BuilderInfo info;
+        private final BuilderContext info;
 
-        BuilderInvocationHandler(BuilderInfo info) {
+        BuilderInvocationHandler(BuilderContext info) {
             this.info = info;
             this.v = handler.preProcess(handler.newInstance(this.info), this.info);
         }

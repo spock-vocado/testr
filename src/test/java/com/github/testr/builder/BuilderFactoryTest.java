@@ -1,9 +1,9 @@
 package com.github.testr.builder;
 
-import com.github.testr.builder.jpa.AbstractJpaObjectHandler;
-import com.github.testr.builder.pojos.AddressBuilder;
+import com.github.testr.builder.jpa.AbstractJpaBuilderHandler;
+import com.github.testr.builder.builders.AddressBuilder;
 import com.github.testr.builder.pojos.Person;
-import com.github.testr.builder.pojos.PersonBuilder;
+import com.github.testr.builder.builders.PersonBuilder;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -12,12 +12,12 @@ import static org.fest.assertions.api.Assertions.assertThat;
 
 public class BuilderFactoryTest {
 
-    private DynBuilderFactory bf;
+    private BuilderFactory bf;
 
     @BeforeMethod
     public void init() {
-        bf = new DynBuilderFactory();
-        bf.setHandler(new AbstractJpaObjectHandler() {
+        bf = new BuilderFactory();
+        bf.setHandler(new AbstractJpaBuilderHandler() {
             @Override
             protected Object persist(Object o) {
                 log.debug("Persisting " + o);
