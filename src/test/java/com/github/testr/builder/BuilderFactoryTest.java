@@ -3,35 +3,56 @@ package com.github.testr.builder;
 import com.github.testr.builder.builders.InvalidPersonBuilder;
 import com.github.testr.builder.builders.PersonBuilder;
 import com.github.testr.builder.builders.PhoneBuilder;
+import com.github.testr.builder.builders.ProductBuilder;
 import com.github.testr.builder.jpa.AbstractJpaBuilderHandler;
 import com.github.testr.builder.builders.AddressBuilder;
 import com.github.testr.builder.pojos.Person;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import static com.github.testr.builder.BuilderHelper.with;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 
 public class BuilderFactoryTest {
 
-    private BuilderFactory bf;
-
     @BeforeMethod
     public void init() {
-        bf = new BuilderFactory();
-        bf.setHandler(new AbstractJpaBuilderHandler() {
+        BuilderFactory factory = new BuilderFactory();
+        factory.setHandler(new AbstractJpaBuilderHandler() {
             @Override
             protected Object persist(Object o) {
                 log.debug("Persisting " + o);
                 return o;
             }
         });
+        BuilderHelper.setFactory(factory);
     }
 
     @Test(expectedExceptions = BuilderException.class,
             expectedExceptionsMessageRegExp = "Incorrect API usage.+")
     public void testMissingParent() {
-        bf.get(AddressBuilder.class)
+        // this should fail because AddressBuilder declared @ChildOf(Person.class)
+        with(AddressBuilder.class)
+                .address1("285 Bay st")
+                .city("Long Beach")
+                .state("CA")
+                .country("USA")
+                .build();
+    }
+
+    @Test(expectedExceptions = BuilderException.class,
+            expectedExceptionsMessageRegExp = "Incorrect API usage: current object must " +
+                    "be defined in the context of an instance of .+\\.Person")
+    public void testIncorrectParent() {
+
+        // notice that we haven't invoked build(), so a product instance is still in the context
+        with(ProductBuilder.class)
+                .name("spyglass")
+                .quantity(10);
+
+        // this should fail because AddressBuilder declared @ChildOf(Person.class)
+        with(AddressBuilder.class)
                 .address1("285 Bay st")
                 .city("Long Beach")
                 .state("CA")
@@ -42,7 +63,7 @@ public class BuilderFactoryTest {
     @Test(expectedExceptions = BuilderException.class,
             expectedExceptionsMessageRegExp = "Could not find field 'weight'.+\\.Person")
     public void testUndefinedField() {
-        bf.get(InvalidPersonBuilder.class)
+        with(InvalidPersonBuilder.class)
                 .firstName("Antonio")
                 .lastName("Gomes")
                 .weight(999)
@@ -51,17 +72,19 @@ public class BuilderFactoryTest {
 
     @Test
     public void testBuilder() {
-        Person p = bf.get(PersonBuilder.class)
+        Person p = with(PersonBuilder.class)
                 .firstName("Antonio")
                 .ssn("00000000")
                 .active(true)
                 .dob("1969-01-01")
-                .address(bf.get(AddressBuilder.class)
+                .address(with(AddressBuilder.class)
                         .address1("285 Bay st")
                         .city("Long Beach")
                         .state("CA")
-                        .country("USA")
-                        .build())
+                        .country("USA"))
+                .phone(with(PhoneBuilder.class)
+                        .number("00000")
+                        .type("MOBILE"))
                 .build();
 
         System.out.println("RESULT = " + p);

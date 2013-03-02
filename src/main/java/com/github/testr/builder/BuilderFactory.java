@@ -39,7 +39,7 @@ public class BuilderFactory {
         this.handler = handler;
     }
 
-    public <T extends IBuilder<?>> T get(Class<T> builderClass) {
+    public <T extends IBuilder<?>> T create(Class<T> builderClass) {
         Class<?> entityClass = (Class<?>) ((ParameterizedType) builderClass.getGenericInterfaces()[0]).getActualTypeArguments()[0];
         return (T) Proxy.newProxyInstance(
                 getLoader(),

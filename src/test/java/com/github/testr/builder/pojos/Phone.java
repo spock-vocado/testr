@@ -1,6 +1,6 @@
 package com.github.testr.builder.pojos;
 
-import com.github.testr.builder.ChildOf;
+import com.github.testr.builder.jpa.ChildOf;
 
 @ChildOf(Person.class)
 public class Phone {

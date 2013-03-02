@@ -18,5 +18,11 @@ public interface PersonBuilder extends IBuilder<Person> {
 
     PersonBuilder address(AddressBuilder addressBuilder);
 
+    AddressBuilder address();
+
     PersonBuilder active(Boolean active);
+
+    PersonBuilder phone(PhoneBuilder v);
+
+    PhoneBuilder phone();
 }

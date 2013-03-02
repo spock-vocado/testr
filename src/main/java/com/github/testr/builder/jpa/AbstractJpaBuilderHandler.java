@@ -2,7 +2,6 @@ package com.github.testr.builder.jpa;
 
 import com.github.testr.builder.BuilderContext;
 import com.github.testr.builder.BuilderException;
-import com.github.testr.builder.ChildOf;
 import com.github.testr.builder.DefaultBuilderHandler;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -32,9 +31,10 @@ public abstract class AbstractJpaBuilderHandler extends DefaultBuilderHandler {
         stack.pop();
         ChildOf childOf = context.getBuilderClass().getAnnotation(ChildOf.class);
         if (childOf != null) {
-            if (stack.isEmpty() || !childOf.value().isAssignableFrom(stack.peek().getClass()))
+            if (stack.isEmpty() || !childOf.value().isAssignableFrom(stack.peek().getClass())) {
                 throw new BuilderException("Incorrect API usage: current object must be defined in " +
                         "the context of an instance of " + childOf.value().getName());
+            }
             log.debug("Child object " + o);
         }
         return persist(o);
