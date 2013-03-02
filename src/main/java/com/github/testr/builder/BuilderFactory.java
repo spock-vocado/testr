@@ -71,7 +71,7 @@ public class BuilderFactory {
                 Object value = args[0];
                 Field f = ReflectionUtils.findField(info.getObjectClass(), name);
                 if (f == null)
-                    throw new BuilderException("Could not find field '" + name + "' in class"
+                    throw new BuilderException("Could not find field '" + name + "' in class "
                             + info.getObjectClass().getName());
                 f.setAccessible(true);
                 Object convertedValue = convert(f.getType(), value);

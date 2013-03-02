@@ -9,6 +9,7 @@ public class Person {
     private Date dob;
     private String ssn;
     private Address address;
+    private Phone phone;
     private Boolean active;
 
     public String getFirstName() {
@@ -57,6 +58,14 @@ public class Person {
 
     public void setActive(Boolean active) {
         this.active = active;
+    }
+
+    public Phone getPhone() {
+        return phone;
+    }
+
+    public void setPhone(Phone phone) {
+        this.phone = phone;
     }
 
     @Override

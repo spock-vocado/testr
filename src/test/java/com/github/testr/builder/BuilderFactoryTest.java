@@ -1,9 +1,11 @@
 package com.github.testr.builder;
 
+import com.github.testr.builder.builders.InvalidPersonBuilder;
+import com.github.testr.builder.builders.PersonBuilder;
+import com.github.testr.builder.builders.PhoneBuilder;
 import com.github.testr.builder.jpa.AbstractJpaBuilderHandler;
 import com.github.testr.builder.builders.AddressBuilder;
 import com.github.testr.builder.pojos.Person;
-import com.github.testr.builder.builders.PersonBuilder;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -26,13 +28,24 @@ public class BuilderFactoryTest {
         });
     }
 
-    @Test(expectedExceptions = BuilderException.class, expectedExceptionsMessageRegExp = "Incorrect API usage.+")
-    public void testDependent() {
+    @Test(expectedExceptions = BuilderException.class,
+            expectedExceptionsMessageRegExp = "Incorrect API usage.+")
+    public void testMissingParent() {
         bf.get(AddressBuilder.class)
                 .address1("285 Bay st")
                 .city("Long Beach")
                 .state("CA")
                 .country("USA")
+                .build();
+    }
+
+    @Test(expectedExceptions = BuilderException.class,
+            expectedExceptionsMessageRegExp = "Could not find field 'weight'.+\\.Person")
+    public void testUndefinedField() {
+        bf.get(InvalidPersonBuilder.class)
+                .firstName("Antonio")
+                .lastName("Gomes")
+                .weight(999)
                 .build();
     }
 
