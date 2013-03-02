@@ -15,7 +15,7 @@ public abstract class BuilderHelper {
         BuilderHelper.factory = factory;
     }
 
-    public static <T extends IBuilder<?>> T with(Class<T> builderClass) {
+    public static <T extends IBuilder<?>> T begin(Class<T> builderClass) {
         return factory.create(builderClass);
     }
 

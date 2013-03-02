@@ -10,7 +10,7 @@ import com.github.testr.builder.pojos.Person;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static com.github.testr.builder.BuilderHelper.with;
+import static com.github.testr.builder.BuilderHelper.begin;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 
@@ -33,7 +33,7 @@ public class BuilderFactoryTest {
             expectedExceptionsMessageRegExp = "Incorrect API usage.+")
     public void testMissingParent() {
         // this should fail because AddressBuilder declared @ChildOf(Person.class)
-        with(AddressBuilder.class)
+        begin(AddressBuilder.class)
                 .address1("285 Bay st")
                 .city("Long Beach")
                 .state("CA")
@@ -47,12 +47,12 @@ public class BuilderFactoryTest {
     public void testIncorrectParent() {
 
         // notice that we haven't invoked build(), so a product instance is still in the context
-        with(ProductBuilder.class)
+        begin(ProductBuilder.class)
                 .name("spyglass")
                 .quantity(10);
 
         // this should fail because AddressBuilder declared @ChildOf(Person.class)
-        with(AddressBuilder.class)
+        begin(AddressBuilder.class)
                 .address1("285 Bay st")
                 .city("Long Beach")
                 .state("CA")
@@ -63,7 +63,7 @@ public class BuilderFactoryTest {
     @Test(expectedExceptions = BuilderException.class,
             expectedExceptionsMessageRegExp = "Could not find field 'weight'.+\\.Person")
     public void testUndefinedField() {
-        with(InvalidPersonBuilder.class)
+        begin(InvalidPersonBuilder.class)
                 .firstName("Antonio")
                 .lastName("Gomes")
                 .weight(999)
@@ -72,17 +72,17 @@ public class BuilderFactoryTest {
 
     @Test
     public void testBuilder() {
-        Person p = with(PersonBuilder.class)
+        Person p = begin(PersonBuilder.class)
                 .firstName("Antonio")
                 .ssn("00000000")
                 .active(true)
                 .dob("1969-01-01")
-                .address(with(AddressBuilder.class)
+                .address(begin(AddressBuilder.class)
                         .address1("285 Bay st")
                         .city("Long Beach")
                         .state("CA")
                         .country("USA"))
-                .phone(with(PhoneBuilder.class)
+                .phone(begin(PhoneBuilder.class)
                         .number("00000")
                         .type("MOBILE"))
                 .build();
