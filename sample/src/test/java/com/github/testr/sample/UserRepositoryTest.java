@@ -17,7 +17,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import static com.github.testr.builder.BuilderHelper.begin;
-import static com.github.testr.builder.BuilderHelper.setBuilderFactory;
+import static com.github.testr.builder.BuilderHelper.setDefaultBuilderFactory;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 @ContextConfiguration(locations = "classpath:context-sample.xml")
@@ -30,35 +30,34 @@ public class UserRepositoryTest extends AbstractTransactionalTestNGSpringContext
     @PersistenceContext
     private EntityManager em;
 
+    private User u;
+
     @BeforeMethod
     public void fixture() {
-        setBuilderFactory(new BuilderFactory(new JpaBuilderHandler(em)));
+        setDefaultBuilderFactory(new BuilderFactory(new JpaBuilderHandler(em)));
+
+        u = begin(UserBuilder.class)
+                .username("user")
+                .firstName("FirstName")
+                .lastName("LastName")
+                .email("user@domain.com")
+                .address(begin(AddressBuilder.class)
+                        .address1("666 Main St.")
+                        .city("Long Beach")
+                        .state("CA")
+                        .country("USA"))
+                .build();
     }
 
     @Test
     public void testFind() {
-        int n = 1;
-        for (int i = 0; i < n; i++)
-            begin(UserBuilder.class)
-                    .username("user" + i)
-                    .firstName("FirstName" + i)
-                    .lastName("LastName" + i)
-                    .email("user" + i + "@domain.com")
-                    .address(begin(AddressBuilder.class)
-                            .address1("666 Main St.")
-                            .city("Long Beach")
-                            .state("CA")
-                            .country("USA"))
-                    .build();
-
         for (User u : repository.findAll()) {
             System.out.println(u);
             assertThat(u.getAddress()).isNotNull();
             assertThat(u.getAddress().getUser()).isNotNull();
             assertThat(u.getAddress().getUser()).isSameAs(u);
         }
-
-        assertThat(repository.count()).isEqualTo(n);
+        assertThat(repository.count()).isEqualTo(1);
     }
 
 

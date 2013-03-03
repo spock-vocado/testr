@@ -23,7 +23,7 @@ public class BuilderFactoryTest {
     public void init() {
         BuilderFactory factory = new BuilderFactory();
         factory.setHandler(new JpaBuilderHandler(Mockito.mock(EntityManager.class)));
-        BuilderHelper.setBuilderFactory(factory);
+        BuilderHelper.setDefaultBuilderFactory(factory);
     }
 
     @Test(expectedExceptions = BuilderException.class,

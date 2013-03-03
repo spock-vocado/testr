@@ -1,6 +1,7 @@
 package com.github.testr.sample.fixture;
 
 import com.github.testr.builder.IBuilder;
+import com.github.testr.sample.model.Address;
 import com.github.testr.sample.model.User;
 
 public interface UserBuilder extends IBuilder<User> {
@@ -11,6 +12,8 @@ public interface UserBuilder extends IBuilder<User> {
     UserBuilder lastName(String v);
 
     UserBuilder email(String v);
+
+    UserBuilder address(Address v);
 
     UserBuilder address(AddressBuilder v);
 }

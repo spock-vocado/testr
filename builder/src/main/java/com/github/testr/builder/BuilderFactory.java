@@ -15,6 +15,9 @@ import java.util.Date;
 
 import static java.lang.String.format;
 
+/**
+ * Factory that creates object builders based on dynamic proxies.
+ */
 @SuppressWarnings("unchecked")
 public class BuilderFactory {
 
@@ -48,7 +51,8 @@ public class BuilderFactory {
     }
 
     public <T extends IBuilder<?>> T create(Class<T> builderClass) {
-        Class<?> entityClass = (Class<?>) ((ParameterizedType) builderClass.getGenericInterfaces()[0]).getActualTypeArguments()[0];
+        Class<?> entityClass = (Class<?>) ((ParameterizedType) builderClass.getGenericInterfaces()[0])
+                .getActualTypeArguments()[0];
         return (T) Proxy.newProxyInstance(
                 getLoader(),
                 new Class[]{builderClass},

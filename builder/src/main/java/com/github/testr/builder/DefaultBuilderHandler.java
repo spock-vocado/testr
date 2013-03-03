@@ -3,6 +3,10 @@ package com.github.testr.builder;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+/**
+ * Default implementation of the interface {@link IBuilderHandler}
+ * that performs no additional processing.
+ */
 public class DefaultBuilderHandler implements IBuilderHandler {
 
     private static final Log log = LogFactory.getLog(DefaultBuilderHandler.class);

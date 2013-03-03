@@ -11,7 +11,7 @@ public abstract class BuilderHelper {
         return factory;
     }
 
-    public static void setBuilderFactory(BuilderFactory factory) {
+    public static void setDefaultBuilderFactory(BuilderFactory factory) {
         BuilderHelper.factory = factory;
     }
 

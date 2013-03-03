@@ -15,9 +15,7 @@ public class JpaBuilderHandler extends DefaultBuilderHandler {
     protected static final Log log = LogFactory.getLog(JpaBuilderHandler.class);
 
 
-    private Stack<BuilderContext> stack = new Stack<BuilderContext>();
-
-
+    private Stack<BuilderContext> stack = new Stack<>();
     private EntityManager entityManager;
 
     public JpaBuilderHandler(EntityManager entityManager) {
