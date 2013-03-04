@@ -69,6 +69,7 @@ public class JpaBuilderHandler extends DefaultBuilderHandler {
             log.debug("Persist+flush: " + o);
             em.persist(o);
             em.flush();
+            em.clear();
         } else {
             log.debug("Persist: " + o);
             em.persist(o);
