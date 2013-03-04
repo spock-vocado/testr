@@ -135,6 +135,22 @@
             <version>3.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.jboss.naming</groupId>
+            <artifactId>jnpserver</artifactId>
+            <version>5.0.3.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <version>3.1.0.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging-spi</artifactId>
+            <version>2.1.0.GA</version>
+        </dependency>
+
     </dependencies>
 
 </project>

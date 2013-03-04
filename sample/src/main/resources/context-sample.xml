@@ -10,11 +10,12 @@
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd">
 
-    <context:annotation-config/>
-
-    <import resource="META-INF/xa/context-jta.xml"/>
-    <import resource="META-INF/xa/context-jpa-testr.xml"/>
-    <import resource="META-INF/xa/context-jpa-other.xml"/>
+    <import resource="META-INF/xa/jta.xml"/>
+    <import resource="META-INF/xa/jpa-testr-ds.xml"/>
+    <import resource="META-INF/xa/jpa-testr-pu.xml"/>
+    <import resource="META-INF/xa/jpa-other-ds.xml"/>
+    <import resource="META-INF/xa/jpa-other-pu.xml"/>
+    <import resource="META-INF/xa/jms.xml"/>
 
     <context:component-scan base-package="com.github.testr.sample.service"/>
 

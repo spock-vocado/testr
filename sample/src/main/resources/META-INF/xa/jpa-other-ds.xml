@@ -6,7 +6,6 @@
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
 
-
     <!-- See http://docs.codehaus.org/display/BTM/JdbcConfiguration2x -->
 
     <bean id="otherJdbcDataSource"
@@ -25,20 +24,6 @@
                 <prop key="password"></prop>
                 <prop key="URL">jdbc:mysql://localhost:3306/other</prop>
             </props>
-        </property>
-    </bean>
-
-    <bean id="otherEntityManagerFactory"
-          class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-          depends-on="transactionManager">
-        <property name="dataSource" ref="otherJdbcDataSource"/>
-        <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.other.xml"/>
-        <property name="persistenceUnitName" value="otherPu"/>
-        <property name="jpaVendorAdapter">
-            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="generateDdl" value="true"/>
-                <property name="database" value="MYSQL"/>
-            </bean>
         </property>
     </bean>
 
