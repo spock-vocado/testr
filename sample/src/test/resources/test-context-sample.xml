@@ -12,4 +12,11 @@
 
     <import resource="context-sample.xml"/>
 
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="transactionManager"/>
+    </bean>
+
+
+    <bean class="com.github.testr.sample.fixture.DefaultFixture" scope="prototype"/>
+
 </beans>

@@ -2,8 +2,8 @@ package com.github.testr.sample.fixture;
 
 import com.github.testr.builder.IBuilder;
 import com.github.testr.builder.jpa.ChildOf;
-import com.github.testr.sample.model.Address;
-import com.github.testr.sample.model.User;
+import com.github.testr.sample.model.testr.Address;
+import com.github.testr.sample.model.testr.User;
 
 @ChildOf(entityClass = User.class, parentProperty = "user")
 public interface AddressBuilder extends IBuilder<Address> {

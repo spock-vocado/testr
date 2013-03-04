@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.0.xsd">
+
+    <!-- BTM Embedded configuration -->
+    <bean id="btmConfig"
+          factory-method="getConfiguration"
+          class="bitronix.tm.TransactionManagerServices">
+        <property name="serverId" value="testr"/>
+        <!-- see http://docs.codehaus.org/display/BTM/FAQ#FAQ-CanBTMruninacluster -->
+        <property name="currentNodeOnlyRecovery" value="true"/>
+    </bean>
+
+    <!-- BTM manager -->
+    <bean id="bitronixTransactionManager"
+          factory-method="getTransactionManager"
+          class="bitronix.tm.TransactionManagerServices"
+          depends-on="btmConfig"
+          destroy-method="shutdown"/>
+
+    <!-- Spring JtaTransactionManager based on BTM-->
+    <bean id="transactionManager"
+          class="org.springframework.transaction.jta.JtaTransactionManager"
+          lazy-init="false">
+        <property name="transactionManager" ref="bitronixTransactionManager"/>
+        <property name="userTransaction" ref="bitronixTransactionManager"/>
+    </bean>
+
+</beans>

@@ -1,4 +1,4 @@
-package com.github.testr.sample.model;
+package com.github.testr.sample.model.testr;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 

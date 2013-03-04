@@ -2,19 +2,23 @@ package com.github.testr.sample.fixture;
 
 import com.github.testr.builder.BuilderFactory;
 import com.github.testr.builder.jpa.JpaBuilderHandler;
-import com.github.testr.sample.model.User;
+import com.github.testr.sample.model.testr.User;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import static com.github.testr.builder.BuilderHelper.begin;
 import static com.github.testr.builder.BuilderHelper.setDefaultBuilderFactory;
 
-public class Fixture {
+public class DefaultFixture {
 
-    public final User user1;
-    public final User user2;
+    public User user1;
+    public User user2;
 
-    public Fixture(EntityManager em) {
+    @PersistenceContext(unitName = "testrPu")
+    private EntityManager em;
+
+    public void run() {
         setDefaultBuilderFactory(new BuilderFactory(new JpaBuilderHandler(em)));
 
         user1 = begin(UserBuilder.class)

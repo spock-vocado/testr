@@ -1,5 +1,6 @@
-package com.github.testr.sample.model;
+package com.github.testr.sample.model.testr;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.CascadeType;
@@ -68,13 +69,13 @@ public class User extends AbstractPersistable<Long> {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("User");
-        sb.append("{username='").append(username).append('\'');
-        sb.append(", firstName='").append(firstName).append('\'');
-        sb.append(", lastName='").append(lastName).append('\'');
-        sb.append(", email='").append(email).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return new ToStringBuilder(this).
+                append("id", getId()).
+                append("username", username).
+                append("firstName", firstName).
+                append("lastName", lastName).
+                append("email", email).
+                append("address", address).
+                toString();
     }
 }

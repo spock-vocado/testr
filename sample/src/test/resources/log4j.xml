@@ -6,9 +6,9 @@
         <param name="Target" value="System.out"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%-5p [%-30t] %-30c{1} - %m%n"/>
+            <!--<param name="ConversionPattern" value="%-5p [%-30t] %-30c - %m%n"/>-->
         </layout>
     </appender>
-
 
     <category name="com.github.testr">
         <priority value="DEBUG"/>

@@ -1,12 +1,10 @@
-package com.github.testr.sample;
+package com.github.testr.sample.repository;
 
-import com.github.testr.sample.model.EnumType;
-import com.github.testr.sample.model.User;
-import com.github.testr.sample.repository.EnumTypeRepository;
+import com.github.testr.sample.AbstractTransactionalTest;
+import com.github.testr.sample.fixture.EnumTypeBuilder;
+import com.github.testr.sample.model.testr.User;
+import com.github.testr.sample.repository.other.EnumTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -16,36 +14,31 @@ import java.util.List;
 
 import static org.fest.assertions.api.Assertions.assertThat;
 
-@ContextConfiguration(locations = "classpath:test-context-sample.xml")
-@Transactional
-public class EnumTypeRepositoryTest extends AbstractTransactionalTestNGSpringContextTests {
+public class EnumTypeRepositoryTest extends AbstractTransactionalTest {
 
     @Autowired
     private EnumTypeRepository repository;
 
-    @PersistenceContext
-    private EntityManager em;
-
     @BeforeMethod
     public void fixture() {
-        new EnumTypeBuilder(em)
+        new EnumTypeBuilder(otherEm)
                 .name("ADDRESS_TYPE")
                 .value("PERMANENT")
                 .value("BUSINESS")
                 .value("OTHER")
                 .build();
-        new EnumTypeBuilder(em)
+        new EnumTypeBuilder(otherEm)
                 .name("DEPENDENCY_TYPE")
                 .value("DEPENDENT")
                 .value("INDEPENDENT")
                 .build();
-        new EnumTypeBuilder(em)
+        new EnumTypeBuilder(otherEm)
                 .name("PHONE_TYPE")
                 .value("MOBILE")
                 .value("OFFICE")
                 .value("OTHER")
                 .build();
-        new EnumTypeBuilder(em)
+        new EnumTypeBuilder(otherEm)
                 .name("ENROLLMENT_TYPE")
                 .value("APPLICANT")
                 .value("ACTIVE")
@@ -58,6 +51,5 @@ public class EnumTypeRepositoryTest extends AbstractTransactionalTestNGSpringCon
         List<User> v = repository.findByName("ADDRESS_TYPE");
         assertThat(v).isNotNull();
     }
-
 
 }
