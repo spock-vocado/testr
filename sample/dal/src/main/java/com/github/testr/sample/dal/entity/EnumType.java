@@ -1,0 +1,47 @@
+package com.github.testr.sample.dal.entity;
+
+import org.springframework.data.jpa.domain.AbstractPersistable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import java.util.List;
+
+@Entity
+@Table(name = "enum_type")
+public class EnumType extends AbstractPersistable<Long> {
+
+    private static final long serialVersionUID = -2952735933715107252L;
+
+    @Column(unique = true, nullable = false)
+    private String name;
+
+    @OneToMany(mappedBy = "enumType")
+    private List<EnumValue> values;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<EnumValue> getValues() {
+        return values;
+    }
+
+    public void setValues(List<EnumValue> values) {
+        this.values = values;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder();
+        sb.append("EnumType");
+        sb.append("{name='").append(name).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
+}
