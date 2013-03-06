@@ -12,13 +12,10 @@
 
     <context:annotation-config/>
 
-    <import resource="context-dal.xml"/>
+    <import resource="context-service.xml"/>
 
-    <!--
-        Overrides the dummy definition of jdbcDataSourcePreInit to ensure the test db exists
-        Must come after importing "context-dal.xml"
-    -->
-    <bean name="jdbcDataSourcePreInit" class="com.github.testr.sample.dal.repository.DataSourcePreInit" />
+    <!-- override bean -->
+    <!--<bean id="otherService" class="com.github.testr.sample.service.FooServiceMock"/>-->
 
     <bean class="com.github.testr.sample.dal.fixture.DefaultFixture" scope="prototype"/>
 
