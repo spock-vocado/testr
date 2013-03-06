@@ -12,7 +12,7 @@
 
     <import resource="META-INF/dal/jta.xml"/>
     <import resource="META-INF/dal/jpa.xml"/>
-    <!--<import resource="META-INF/dal/jms.xml"/>-->
+    <import resource="META-INF/dal/jms.xml"/>
 
     <tx:annotation-driven mode="proxy" transaction-manager="transactionManager"/>
 
