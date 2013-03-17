@@ -11,7 +11,7 @@
 
     <modules>
         <module>builder</module>
-        <module>sample</module>
+        <module>demo</module>
     </modules>
 
     <developers>
