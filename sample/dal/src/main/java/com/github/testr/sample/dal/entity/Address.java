@@ -6,24 +6,27 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "address")
 public class Address extends AbstractPersistable<Long> {
 
     private static final long serialVersionUID = -2952735933715107252L;
 
-    @Column(nullable = false)
+    @Column(name = "address1", nullable = false)
     private String address1;
 
+    @Column(name = "address2")
     private String address2;
 
-    @Column(nullable = false)
+    @Column(name = "city", nullable = false)
     private String city;
 
-    @Column(nullable = false)
+    @Column(name = "state", nullable = false)
     private String state;
 
-    @Column(nullable = false)
+    @Column(name = "country", nullable = false)
     private String country;
 
     @OneToOne

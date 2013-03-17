@@ -15,9 +15,10 @@ public class EnumValue extends AbstractPersistable<Long> {
 
     private static final long serialVersionUID = -2952735933715107252L;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(name = "value")
     private String value;
 
     @ManyToOne

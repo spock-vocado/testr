@@ -11,14 +11,14 @@
         in case we need to run code before the DS gets initialized. Just make sure the new
         bean has exactly the same id and is listed after including this module's context XML
     -->
-    <bean id="jdbcDataSourcePreInit" class="java.lang.String"/>
+    <bean id="jdbcDataSource.preInit" class="java.lang.String"/>
 
     <!-- See http://docs.codehaus.org/display/BTM/JdbcConfiguration2x -->
     <bean id="jdbcDataSource"
           class="bitronix.tm.resource.jdbc.PoolingDataSource"
           init-method="init"
           destroy-method="close"
-          depends-on="jdbcDataSourcePreInit">
+          depends-on="jdbcDataSource.preInit">
         <property name="className" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
         <property name="uniqueName" value="testr"/>
         <property name="allowLocalTransactions" value="true"/>
@@ -45,6 +45,12 @@
                 <property name="generateDdl" value="true"/>
                 <property name="database" value="MYSQL"/>
             </bean>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">validate</prop>
+                <prop key="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.BitronixJtaPlatform</prop>
+            </props>
         </property>
     </bean>
 

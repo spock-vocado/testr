@@ -6,9 +6,14 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import java.util.List;
 
 @Entity
+@Table(name = "user")
 public class User extends AbstractPersistable<Long> {
 
     private static final long serialVersionUID = -2952735933715107252L;
@@ -22,10 +27,14 @@ public class User extends AbstractPersistable<Long> {
     @Column(name = "last_name")
     private String lastName;
 
+    @Column(name = "email")
     private String email;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Address address;
+
+    @OneToMany(mappedBy = "user")
+    private List<Book> books;
 
     public String getUsername() {
         return username;
@@ -65,6 +74,14 @@ public class User extends AbstractPersistable<Long> {
 
     public void setAddress(Address address) {
         this.address = address;
+    }
+
+    public List<Book> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<Book> books) {
+        this.books = books;
     }
 
     @Override

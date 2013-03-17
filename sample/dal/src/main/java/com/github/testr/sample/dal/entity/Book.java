@@ -4,21 +4,25 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import java.util.List;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "enum_type")
-public class EnumType extends AbstractPersistable<Long> {
+@Table(name = "book", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name", "user_id"})
+})
+public class Book extends AbstractPersistable<Long> {
 
     private static final long serialVersionUID = -2952735933715107252L;
 
-    @Column(name="name", unique = true, nullable = false)
+    @Column(name="name", nullable = false, length = 50)
     private String name;
 
-    @OneToMany(mappedBy = "enumType")
-    private List<EnumValue> values;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     public String getName() {
         return name;
@@ -28,18 +32,18 @@ public class EnumType extends AbstractPersistable<Long> {
         this.name = name;
     }
 
-    public List<EnumValue> getValues() {
-        return values;
+    public User getUser() {
+        return user;
     }
 
-    public void setValues(List<EnumValue> values) {
-        this.values = values;
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
-        sb.append("EnumType");
+        sb.append("Book");
         sb.append("{name='").append(name).append('\'');
         sb.append('}');
         return sb.toString();

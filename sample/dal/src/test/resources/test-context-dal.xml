@@ -15,10 +15,20 @@
     <import resource="context-dal.xml"/>
 
     <!--
-        Overrides the dummy definition of jdbcDataSourcePreInit to ensure the test db exists
+        Overrides the dummy definition of jdbcDataSource.preInit to ensure the test db exists
         Must come after importing "context-dal.xml"
     -->
-    <bean name="jdbcDataSourcePreInit" class="com.github.testr.sample.dal.repository.DataSourcePreInit" />
+    <bean name="jdbcDataSource.preInit" class="com.github.testr.sample.dal.repository.MySQLDatabaseFixture">
+        <property name="username" value="root"/>
+        <property name="password" value=""/>
+        <property name="url" value="jdbc:mysql://localhost/testr"/>
+        <property name="sqlScripts">
+            <array>
+                <value>classpath:sql/create.sql</value>
+                <value>classpath:sql/other.sql</value>
+            </array>
+        </property>
+    </bean>
 
     <bean class="com.github.testr.sample.dal.fixture.DefaultFixture" scope="prototype"/>
 
