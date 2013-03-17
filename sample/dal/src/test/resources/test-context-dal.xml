@@ -18,7 +18,7 @@
         Overrides the dummy definition of jdbcDataSource.preInit to ensure the test db exists
         Must come after importing "context-dal.xml"
     -->
-    <bean name="jdbcDataSource.preInit" class="com.github.testr.sample.dal.repository.MySQLDatabaseFixture">
+    <bean name="jdbcDataSource.preInit" class="com.github.testr.sample.dal.fixture.MySQLDatabaseFixture">
         <property name="username" value="root"/>
         <property name="password" value=""/>
         <property name="url" value="jdbc:mysql://localhost/testr"/>

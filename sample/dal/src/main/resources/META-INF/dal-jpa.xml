@@ -19,17 +19,17 @@
           init-method="init"
           destroy-method="close"
           depends-on="jdbcDataSource.preInit">
-        <property name="className" value="com.mysql.jdbc.jdbc2.optional.MysqlXADataSource"/>
+        <property name="className" value="#{dalProps['dataSource.driver']}"/>
         <property name="uniqueName" value="testr"/>
         <property name="allowLocalTransactions" value="true"/>
-        <property name="testQuery" value="select 1"/>
-        <property name="maxPoolSize" value="5"/>
+        <property name="testQuery" value="#{dalProps['dataSource.testQuery']}"/>
+        <property name="maxPoolSize" value="#{dalProps['dataSource.maxPoolSize']}"/>
         <property name="isolationLevel" value="READ_COMMITTED"/>
         <property name="driverProperties">
             <props>
-                <prop key="user">root</prop>
-                <prop key="password"></prop>
-                <prop key="URL">jdbc:mysql://localhost:3306/testr</prop>
+                <prop key="user">#{dalProps['dataSource.username']}</prop>
+                <prop key="password">#{dalProps['dataSource.password']}</prop>
+                <prop key="URL">#{dalProps['dataSource.url']}</prop>
             </props>
         </property>
     </bean>
@@ -38,18 +38,20 @@
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           depends-on="transactionManager">
         <property name="dataSource" ref="jdbcDataSource"/>
-        <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml"/>
+        <property name="persistenceXmlLocation" value="#{dalProps['jpa.persistenceXmlLocation']}"/>
         <property name="persistenceUnitName" value="testrPu"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
                 <property name="generateDdl" value="true"/>
-                <property name="database" value="MYSQL"/>
+                <property name="database" value="#{dalProps['jpa.database']}"/>
             </bean>
         </property>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">validate</prop>
-                <prop key="hibernate.transaction.jta.platform">org.hibernate.service.jta.platform.internal.BitronixJtaPlatform</prop>
+                <prop key="hibernate.hbm2ddl.auto">#{dalProps['hibernate.hbm2ddl.auto']}</prop>
+                <prop key="hibernate.transaction.jta.platform">
+                    org.hibernate.service.jta.platform.internal.BitronixJtaPlatform
+                </prop>
             </props>
         </property>
     </bean>

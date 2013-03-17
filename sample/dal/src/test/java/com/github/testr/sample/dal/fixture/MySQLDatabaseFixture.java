@@ -1,4 +1,4 @@
-package com.github.testr.sample.dal.repository;
+package com.github.testr.sample.dal.fixture;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
