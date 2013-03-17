@@ -6,7 +6,7 @@
  * MODIFIED, DISTRIBUTED, DISPLAYED, DISCLOSED OR USED IN ANY WAY NOT EXPRESSLY
  * AUTHORIZED BY VOCADO, LLC IN WRITING.
  */
-package com.github.testr.demo.util;
+package com.github.testr.demo.common;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.ClassPathResource;
@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class Env {
 
-    public static final String PROP_KEY = "testr.config.location";
+    public static final String PROP_KEY = "config.location";
 
     public Resource getResource(String resourceName) {
         String location = System.getProperty(PROP_KEY);

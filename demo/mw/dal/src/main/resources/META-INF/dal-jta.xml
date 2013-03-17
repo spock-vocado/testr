@@ -11,11 +11,15 @@
     <!-- BTM Embedded configuration -->
     <bean id="btmConfig"
           factory-method="getConfiguration"
-          class="bitronix.tm.TransactionManagerServices"
-          depends-on="dalProps">
-        <property name="serverId" value="testr"/>
+          class="bitronix.tm.TransactionManagerServices">
         <!-- see http://docs.codehaus.org/display/BTM/FAQ#FAQ-CanBTMruninacluster -->
-        <property name="currentNodeOnlyRecovery" value="true"/>
+        <property name="currentNodeOnlyRecovery" value="#{dalProps['bitronix.currentNodeOnlyRecovery']}"/>
+        <property name="serverId" value="#{dalProps['bitronix.serverId']}"/>
+        <property name="journal" value="#{dalProps['bitronix.journal']}"/>
+        <property name="logPart1Filename" value="#{dalProps['bitronix.logPart1Filename']}"/>
+        <property name="logPart2Filename" value="#{dalProps['bitronix.logPart2Filename']}"/>
+        <property name="defaultTransactionTimeout" value="#{dalProps['bitronix.defaultTransactionTimeout']}"/>
+        <property name="gracefulShutdownInterval" value="#{dalProps['bitronix.gracefulShutdownInterval']}"/>
     </bean>
 
     <!-- BTM manager -->
