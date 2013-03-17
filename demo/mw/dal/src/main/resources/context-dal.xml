@@ -17,8 +17,8 @@
         <property name="ignoreResourceNotFound" value="true"/>
         <property name="locations">
             <list>
-                <value>classpath:META-INF/testr-dal-defaults.properties</value>
-                <value>#{env.getResource('testr-dal.properties')}</value>
+                <value>classpath:META-INF/demo-dal-defaults.properties</value>
+                <value>#{env.getResource('demo-dal.properties')}</value>
             </list>
         </property>
     </bean>
