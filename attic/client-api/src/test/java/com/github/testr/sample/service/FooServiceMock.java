@@ -1,7 +1,7 @@
-package com.github.testr.sample.service;
+package com.github.testr.demo.service;
 
-import com.github.testr.sample.dal.entity.EnumType;
-import com.github.testr.sample.dal.entity.EnumValue;
+import com.github.testr.demo.dal.entity.EnumType;
+import com.github.testr.demo.dal.entity.EnumValue;
 
 import java.util.ArrayList;
 

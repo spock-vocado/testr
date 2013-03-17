@@ -1,4 +1,4 @@
-package com.github.testr.sample.service;
+package com.github.testr.demo.service;
 
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;

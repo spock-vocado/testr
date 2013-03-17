@@ -1,6 +1,6 @@
-package com.github.testr.sample.service;
+package com.github.testr.demo.service;
 
-import com.github.testr.sample.dal.entity.EnumType;
+import com.github.testr.demo.dal.entity.EnumType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.Test;

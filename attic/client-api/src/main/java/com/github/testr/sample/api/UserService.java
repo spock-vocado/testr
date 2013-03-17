@@ -1,6 +1,6 @@
-package com.github.testr.sample.service;
+package com.github.testr.demo.service;
 
-import com.github.testr.sample.dal.entity.User;
+import com.github.testr.demo.dal.entity.User;
 
 import java.util.List;
 

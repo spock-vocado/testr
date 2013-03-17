@@ -17,6 +17,6 @@
     <!-- override bean -->
     <!--<bean id="otherService" class="com.github.testr.sample.service.FooServiceMock"/>-->
 
-    <bean class="com.github.testr.sample.dal.fixture.DefaultFixture" scope="prototype"/>
+    <bean class="com.github.testr.demo.dal.fixture.DefaultFixture" scope="prototype"/>
 
 </beans>
