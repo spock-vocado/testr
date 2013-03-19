@@ -16,9 +16,9 @@
         <property name="url" value="#{dalProps['dataSource.url']}"/>
         <property name="sqlScripts">
             <array>
-                <value>classpath:sql/dal-create.sql</value>
-                <value>classpath:sql/dal-seeds.sql</value>
-                <value>classpath:sql/dal-other.sql</value>
+                <value>classpath:sql/dal-01-create.sql</value>
+                <value>classpath:sql/dal-03-seeds.sql</value>
+                <value>classpath:sql/dal-02-other.sql</value>
             </array>
         </property>
     </bean>
