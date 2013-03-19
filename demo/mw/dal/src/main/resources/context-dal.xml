@@ -25,7 +25,7 @@
 
     <import resource="META-INF/dal-jta.xml"/>
     <import resource="META-INF/dal-jpa.xml"/>
-    <!--<import resource="META-INF/dal/jms.xml"/>-->
+    <import resource="META-INF/dal-jms.xml"/>
 
     <context:component-scan base-package="com.github.testr.demo.dal"/>
 

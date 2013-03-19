@@ -24,10 +24,10 @@
         <property name="allowLocalTransactions" value="true"/>
         <property name="testQuery" value="#{dalProps['dataSource.testQuery']}"/>
         <property name="maxPoolSize" value="#{dalProps['dataSource.maxPoolSize']}"/>
-        <property name="isolationLevel" value="READ_COMMITTED"/>
+        <property name="isolationLevel" value="#{dalProps['dataSource.isolationLevel']}"/>
         <property name="driverProperties">
             <props>
-                <prop key="user">#{dalProps['dataSource.username']}</prop>
+                <prop key="user">#{dalProps['dataSource.user']}</prop>
                 <prop key="password">#{dalProps['dataSource.password']}</prop>
                 <prop key="URL">#{dalProps['dataSource.url']}</prop>
             </props>
@@ -37,8 +37,9 @@
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
           depends-on="transactionManager">
-        <property name="dataSource" ref="jdbcDataSource"/>
+        <property name="jtaDataSource" ref="jdbcDataSource"/>
         <property name="persistenceXmlLocation" value="#{dalProps['jpa.persistenceXmlLocation']}"/>
+        <property name="packagesToScan" value="#{dalProps['jpa.packagesToScan']}"/>
         <property name="persistenceUnitName" value="testrPu"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">

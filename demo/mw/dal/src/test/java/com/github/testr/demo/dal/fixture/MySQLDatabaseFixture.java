@@ -20,7 +20,7 @@ public class MySQLDatabaseFixture {
     private static final Pattern urlRegex = Pattern.compile("^(jdbc:mysql://[^/]+)/([^/]+)(/.+)?$");
 
     private String driver = "com.mysql.jdbc.Driver";
-    private String username = "root";
+    private String user = "root";
     private String password = "";
     private String url;
     private Resource[] sqlScripts;
@@ -33,12 +33,12 @@ public class MySQLDatabaseFixture {
         this.driver = driver;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUser() {
+        return user;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setUser(String user) {
+        this.user = user;
     }
 
     public String getPassword() {
@@ -69,7 +69,7 @@ public class MySQLDatabaseFixture {
     public void init() {
         log.info("Starting DataSource pre-initiation");
         Assert.notNull(driver, "'driver' property is required");
-        Assert.notNull(username, "'username' property is required");
+        Assert.notNull(user, "'username' property is required");
         Assert.notNull(password, "'password' property is required");
         Assert.notNull(url, "'url' property is required");
 
@@ -86,7 +86,7 @@ public class MySQLDatabaseFixture {
         DriverManagerDataSource ds = new DriverManagerDataSource();
         ds.setDriverClassName(driver);
         ds.setUrl(bootstrapUrl);
-        ds.setUsername(username);
+        ds.setUsername(user);
         ds.setPassword(password);
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
