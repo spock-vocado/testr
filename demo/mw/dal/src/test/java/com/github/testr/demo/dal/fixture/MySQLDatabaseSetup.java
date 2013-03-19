@@ -13,9 +13,9 @@ import javax.annotation.PostConstruct;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MySQLDatabaseFixture {
+public class MySQLDatabaseSetup {
 
-    private static final Log log = LogFactory.getLog(MySQLDatabaseFixture.class);
+    private static final Log log = LogFactory.getLog(MySQLDatabaseSetup.class);
 
     private static final Pattern urlRegex = Pattern.compile("^(jdbc:mysql://[^/]+)/([^/]+)(/.+)?$");
 
@@ -91,8 +91,8 @@ public class MySQLDatabaseFixture {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(ds);
 
-        jdbcTemplate.execute("DROP DATABASE IF EXISTS " + database);
-        jdbcTemplate.execute("CREATE DATABASE IF NOT EXISTS " + database);
+        jdbcTemplate.execute("DROP DATABASE IF EXISTS `" + database + "`");
+        jdbcTemplate.execute("CREATE DATABASE IF NOT EXISTS `" + database + "`");
 
         // reconfigure datasource to the final URL and execute any required script
         if (sqlScripts != null) {

@@ -18,13 +18,15 @@
         Overrides the dummy definition of jdbcDataSource.preInit to ensure the test db exists
         Must come after importing "context-dal.xml"
     -->
-    <bean name="jdbcDataSource.preInit" class="com.github.testr.demo.dal.fixture.MySQLDatabaseFixture">
+    <bean name="jdbcDataSource.preInit" class="com.github.testr.demo.dal.fixture.MySQLDatabaseSetup">
+        <property name="driver" value="#{dalProps['dataSource.driver']}"/>
         <property name="user" value="#{dalProps['dataSource.user']}"/>
         <property name="password" value="#{dalProps['dataSource.password']}"/>
         <property name="url" value="#{dalProps['dataSource.url']}"/>
         <property name="sqlScripts">
             <array>
                 <value>classpath:sql/dal-create.sql</value>
+                <value>classpath:sql/dal-seeds.sql</value>
                 <value>classpath:sql/dal-other.sql</value>
             </array>
         </property>
