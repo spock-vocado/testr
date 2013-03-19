@@ -8,4 +8,6 @@
 
     <persistence-unit name="testrPu" transaction-type="JTA"/>
 
+    <!-- IMPORTANT: See dal-jpa.xml for configuration details -->
+
 </persistence>
