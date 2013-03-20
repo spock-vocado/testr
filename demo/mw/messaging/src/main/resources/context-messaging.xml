@@ -11,24 +11,21 @@
             http://www.springframework.org/schema/data/jpa
             http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <import resource="classpath:context-resources.xml"/>
+    <import resource="classpath:context-common.xml"/>
 
-    <bean id="dalProps"
+    <bean id="messagingProps"
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
         <property name="ignoreResourceNotFound" value="true"/>
         <property name="locations">
             <list>
-                <value>dal-defaults.properties</value>
-                <value>#{env.getResource('dal.properties')}</value>
+                <value>messaging-defaults.properties</value>
+                <value>#{env.getResource('messaging.properties')}</value>
             </list>
         </property>
     </bean>
 
+    <import resource="META-INF/dal-jta.xml"/>
     <import resource="META-INF/dal-jpa.xml"/>
-
-    <context:component-scan base-package="com.github.testr.demo.dal"/>
-
-    <jpa:repositories base-package="com.github.testr.demo.dal.repository"
-                      entity-manager-factory-ref="entityManagerFactory"/>
+    <import resource="META-INF/messaging-jms.xml"/>
 
 </beans>

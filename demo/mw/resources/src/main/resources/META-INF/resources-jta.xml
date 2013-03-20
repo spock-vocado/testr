@@ -13,13 +13,13 @@
           factory-method="getConfiguration"
           class="bitronix.tm.TransactionManagerServices">
         <!-- see http://docs.codehaus.org/display/BTM/FAQ#FAQ-CanBTMruninacluster -->
-        <property name="currentNodeOnlyRecovery" value="#{dalProps['bitronix.currentNodeOnlyRecovery']}"/>
-        <property name="serverId" value="#{dalProps['bitronix.serverId']}"/>
-        <property name="journal" value="#{dalProps['bitronix.journal']}"/>
-        <property name="logPart1Filename" value="#{dalProps['bitronix.logPart1Filename']}"/>
-        <property name="logPart2Filename" value="#{dalProps['bitronix.logPart2Filename']}"/>
-        <property name="defaultTransactionTimeout" value="#{dalProps['bitronix.defaultTransactionTimeout']}"/>
-        <property name="gracefulShutdownInterval" value="#{dalProps['bitronix.gracefulShutdownInterval']}"/>
+        <property name="currentNodeOnlyRecovery" value="#{resourcesProps['bitronix.currentNodeOnlyRecovery']}"/>
+        <property name="serverId" value="#{resourcesProps['bitronix.serverId']}"/>
+        <property name="journal" value="#{resourcesProps['bitronix.journal']}"/>
+        <property name="logPart1Filename" value="#{resourcesProps['bitronix.logPart1Filename']}"/>
+        <property name="logPart2Filename" value="#{resourcesProps['bitronix.logPart2Filename']}"/>
+        <property name="defaultTransactionTimeout" value="#{resourcesProps['bitronix.defaultTransactionTimeout']}"/>
+        <property name="gracefulShutdownInterval" value="#{resourcesProps['bitronix.gracefulShutdownInterval']}"/>
     </bean>
 
     <!-- BTM manager -->

@@ -6,6 +6,7 @@
 
     <artifactId>demo-mw</artifactId>
     <packaging>pom</packaging>
+    <name>Demo :: Middleware</name>
 
     <parent>
         <groupId>com.github.testr.demo</groupId>
@@ -16,6 +17,8 @@
 
     <modules>
         <module>common</module>
+        <module>resources</module>
+        <module>messaging</module>
         <module>dal</module>
         <module>service</module>
     </modules>

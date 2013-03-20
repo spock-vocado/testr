@@ -6,6 +6,7 @@
 
     <artifactId>demo-mw-dal</artifactId>
     <packaging>jar</packaging>
+    <name>Demo :: Middleware :: Data Access Layer</name>
 
     <parent>
         <groupId>com.github.testr.demo</groupId>
@@ -16,15 +17,15 @@
 
     <dependencies>
 
-        <dependency>
-            <groupId>com.github.testr.demo</groupId>
-            <artifactId>demo-mw-common</artifactId>
-        </dependency>
+        <!-- Internal Deps -->
 
         <dependency>
-            <groupId>com.github.testr</groupId>
-            <artifactId>testr-builder</artifactId>
+            <groupId>com.github.testr.demo</groupId>
+            <artifactId>demo-mw-resources</artifactId>
         </dependency>
+
+        <!-- Spring Deps -->
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
@@ -53,9 +54,12 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
         </dependency>
+
+        <!-- Testing Deps -->
+
         <dependency>
-            <groupId>commons-logging</groupId>
-            <artifactId>commons-logging</artifactId>
+            <groupId>com.github.testr</groupId>
+            <artifactId>testr-builder</artifactId>
         </dependency>
         <dependency>
             <groupId>org.testng</groupId>
@@ -64,6 +68,13 @@
         <dependency>
             <groupId>org.easytesting</groupId>
             <artifactId>fest-assert-core</artifactId>
+        </dependency>
+
+        <!-- Other Deps -->
+
+        <dependency>
+            <groupId>commons-logging</groupId>
+            <artifactId>commons-logging</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hibernate.javax.persistence</groupId>
@@ -90,46 +101,8 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.codehaus.btm</groupId>
-            <artifactId>btm</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.geronimo.specs</groupId>
-            <artifactId>geronimo-jta_1.1_spec</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.hornetq</groupId>
-            <artifactId>hornetq-jms-client</artifactId>
-            <version>2.3.0.BETA2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hornetq</groupId>
-            <artifactId>hornetq-commons</artifactId>
-            <version>2.3.0.BETA2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hornetq</groupId>
-            <artifactId>hornetq-core-client</artifactId>
-            <version>2.3.0.BETA2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.naming</groupId>
-            <artifactId>jnpserver</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.logging</groupId>
-            <artifactId>jboss-logging</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jboss.spec.javax.jms</groupId>
-            <artifactId>jboss-jms-api_1.1_spec</artifactId>
-            <version>1.0.1.Final</version>
         </dependency>
 
     </dependencies>

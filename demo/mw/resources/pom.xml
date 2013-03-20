@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>demo-mw-common</artifactId>
+    <artifactId>demo-mw-resources</artifactId>
     <packaging>jar</packaging>
-    <name>Demo :: Middleware :: Common</name>
+    <name>Demo :: Middleware :: Resources</name>
 
     <parent>
         <groupId>com.github.testr.demo</groupId>
@@ -16,14 +16,34 @@
     </parent>
 
     <dependencies>
+
+        <!-- Internal Deps -->
+
+        <dependency>
+            <groupId>com.github.testr.demo</groupId>
+            <artifactId>demo-mw-common</artifactId>
+        </dependency>
+
+
+        <!-- Other deps -->
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.btm</groupId>
+            <artifactId>btm</artifactId>
         </dependency>
     </dependencies>
+
 
 </project>

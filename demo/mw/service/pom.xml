@@ -6,6 +6,7 @@
 
     <artifactId>demo-mw-service</artifactId>
     <packaging>jar</packaging>
+    <name>Demo :: Middleware :: Service Layer</name>
 
     <parent>
         <groupId>com.github.testr.demo</groupId>
@@ -16,7 +17,7 @@
 
     <dependencies>
 
-        <!-- INTERNAL DEPENDENCIES -->
+        <!-- Internal Deps -->
 
         <dependency>
             <groupId>com.github.testr.demo</groupId>
@@ -29,12 +30,12 @@
             <type>test-jar</type>
         </dependency>
 
+        <!-- Other Deps -->
+
         <dependency>
             <groupId>com.github.testr</groupId>
             <artifactId>testr-builder</artifactId>
         </dependency>
-
-        <!-- OTHER DEPENDENCIES -->
 
         <dependency>
             <groupId>org.springframework</groupId>

@@ -6,6 +6,7 @@
 
     <artifactId>demo-ui</artifactId>
     <packaging>pom</packaging>
+    <name>Demo :: User Interface</name>
 
     <parent>
         <groupId>com.github.testr.demo</groupId>
