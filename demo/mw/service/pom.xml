@@ -21,9 +21,12 @@
 
         <dependency>
             <groupId>com.github.testr.demo</groupId>
+            <artifactId>demo-mw-messaging</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.github.testr.demo</groupId>
             <artifactId>demo-mw-dal</artifactId>
         </dependency>
-
         <dependency>
             <groupId>com.github.testr.demo</groupId>
             <artifactId>demo-mw-dal</artifactId>

@@ -12,15 +12,15 @@
           destroy-method="close">
         <property name="className" value="bitronix.tm.resource.jms.JndiXAConnectionFactory"/>
         <property name="uniqueName" value="hornetq"/>
-        <property name="minPoolSize" value="#{dalProps['jms.minPoolSize']}"/>
-        <property name="maxPoolSize" value="#{dalProps['jms.maxPoolSize']}"/>
+        <property name="minPoolSize" value="#{messagingProps['jms.minPoolSize']}"/>
+        <property name="maxPoolSize" value="#{messagingProps['jms.maxPoolSize']}"/>
         <property name="allowLocalTransactions" value="false"/>
-        <property name="user" value="#{dalProps['jms.user']}"/>
-        <property name="password" value="#{dalProps['jms.password']}"/>
+        <property name="user" value="#{messagingProps['jms.user']}"/>
+        <property name="password" value="#{messagingProps['jms.password']}"/>
         <property name="driverProperties">
             <props>
                 <!-- JNDI name of the XA connection factory (depends on HornetQ remote server) -->
-                <prop key="name">#{dalProps['jms.jndi.name']}</prop>
+                <prop key="name">#{messagingProps['jms.jndi.name']}</prop>
             </props>
         </property>
     </bean>

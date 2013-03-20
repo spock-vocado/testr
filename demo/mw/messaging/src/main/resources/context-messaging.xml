@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
-       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="
-            http://www.springframework.org/schema/context
-            http://www.springframework.org/schema/context/spring-context-3.0.xsd
             http://www.springframework.org/schema/beans
-            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-            http://www.springframework.org/schema/data/jpa
-            http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
+            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
     <import resource="classpath:context-common.xml"/>
 
@@ -18,14 +12,12 @@
         <property name="ignoreResourceNotFound" value="true"/>
         <property name="locations">
             <list>
-                <value>messaging-defaults.properties</value>
+                <value>classpath:messaging-defaults.properties</value>
                 <value>#{env.getResource('messaging.properties')}</value>
             </list>
         </property>
     </bean>
 
-    <import resource="META-INF/dal-jta.xml"/>
-    <import resource="META-INF/dal-jpa.xml"/>
     <import resource="META-INF/messaging-jms.xml"/>
 
 </beans>
