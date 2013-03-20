@@ -24,7 +24,8 @@ public class Env {
         if (StringUtils.isBlank(location)) {
             return new ClassPathResource(resourceName);
         }
-        return new FileSystemResource(location + "/" + resourceName);
+        FileSystemResource resource = new FileSystemResource(location + "/" + resourceName);
+        return resource.exists() ? resource : null;
     }
 
 }
