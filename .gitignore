@@ -4,3 +4,4 @@ target
 *.tlog
 *.tmp
 .idea
+.DS_Store
