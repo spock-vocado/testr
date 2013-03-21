@@ -38,7 +38,7 @@ CREATE TABLE `account` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `initial_balance` decimal(19,2) DEFAULT NULL,
   `name` varchar(50) NOT NULL,
-  `type` varchar(255) NOT NULL,
+  `type` int NOT NULL,
   `book_id` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`,`book_id`),

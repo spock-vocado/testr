@@ -1,9 +1,13 @@
 package com.github.testr.demo.dal.entity;
 
+import org.hibernate.annotations.*;
+import org.hibernate.annotations.Parameter;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 import javax.persistence.EnumType;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
@@ -24,8 +28,8 @@ public class Account extends AbstractPersistable<Long> {
     @Column(name = "initial_balance")
     private BigDecimal initialBalance;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name="type", nullable = false)
+    @Type(type = "customkeyEnum")
+    @Column(name = "type", nullable = false)
     private AccountType type;
 
     public String getName() {
