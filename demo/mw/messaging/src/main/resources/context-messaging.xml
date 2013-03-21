@@ -5,7 +5,11 @@
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
+    <!-- Module Dependencies -->
+
     <import resource="classpath:context-common.xml"/>
+
+    <!-- Module Definitions -->
 
     <bean id="messagingProps"
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">
