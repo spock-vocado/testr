@@ -1,5 +1,6 @@
 package com.github.testr.demo.dal.entity;
 
+import com.github.testr.demo.dal.util.AbstractBusinessEntity;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Column;
@@ -10,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "address")
-public class Address extends AbstractPersistable<Long> {
+public class Address extends AbstractBusinessEntity {
 
     private static final long serialVersionUID = -2952735933715107252L;
 
@@ -81,16 +82,4 @@ public class Address extends AbstractPersistable<Long> {
         this.user = user;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Address");
-        sb.append("{address1='").append(address1).append('\'');
-        sb.append(", address2='").append(address2).append('\'');
-        sb.append(", city='").append(city).append('\'');
-        sb.append(", state='").append(state).append('\'');
-        sb.append(", country='").append(country).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
 }

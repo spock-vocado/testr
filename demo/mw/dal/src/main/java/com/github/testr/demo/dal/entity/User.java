@@ -1,7 +1,7 @@
 package com.github.testr.demo.dal.entity;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.springframework.data.jpa.domain.AbstractPersistable;
+import com.github.testr.demo.dal.util.AbstractBusinessEntity;
+import com.github.testr.demo.dal.util.BusinessEntity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,7 +14,8 @@ import java.util.List;
 
 @Entity
 @Table(name = "user")
-public class User extends AbstractPersistable<Long> {
+@BusinessEntity(keys = {"username"}, addToString = {"firstName", "lastName"})
+public class User extends AbstractBusinessEntity {
 
     private static final long serialVersionUID = -2952735933715107252L;
 
@@ -84,15 +85,4 @@ public class User extends AbstractPersistable<Long> {
         this.books = books;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this).
-                append("id", getId()).
-                append("username", username).
-                append("firstName", firstName).
-                append("lastName", lastName).
-                append("email", email).
-                append("address", address).
-                toString();
-    }
 }

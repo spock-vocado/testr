@@ -66,13 +66,13 @@ public class JpaBuilderHandler extends DefaultBuilderHandler {
     protected Object persist(Object o) {
         EntityManager em = getEntityManager();
         if (stack.isEmpty()) {
-            log.debug("Persist+flush: " + o);
             em.persist(o);
             em.flush();
             em.clear();
+            log.debug("Persisted+flushed: " + o);
         } else {
-            log.debug("Persist: " + o);
             em.persist(o);
+            log.debug("Persisted " + o);
         }
         return o;
     }

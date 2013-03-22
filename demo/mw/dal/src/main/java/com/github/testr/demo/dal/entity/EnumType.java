@@ -1,5 +1,6 @@
 package com.github.testr.demo.dal.entity;
 
+import com.github.testr.demo.dal.util.AbstractBusinessEntity;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Column;
@@ -10,7 +11,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "enum_type")
-public class EnumType extends AbstractPersistable<Long> {
+public class EnumType extends AbstractBusinessEntity {
 
     private static final long serialVersionUID = -2952735933715107252L;
 
@@ -36,12 +37,4 @@ public class EnumType extends AbstractPersistable<Long> {
         this.values = values;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("EnumType");
-        sb.append("{name='").append(name).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
 }

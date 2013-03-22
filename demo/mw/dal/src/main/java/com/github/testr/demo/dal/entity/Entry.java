@@ -1,5 +1,6 @@
 package com.github.testr.demo.dal.entity;
 
+import com.github.testr.demo.dal.util.AbstractBusinessEntity;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
@@ -9,7 +10,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "entry")
-public class Entry extends AbstractPersistable<Long> {
+public class Entry extends AbstractBusinessEntity {
 
     private static final long serialVersionUID = -2952735933715107252L;
 
@@ -83,16 +84,4 @@ public class Entry extends AbstractPersistable<Long> {
         this.status = status;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Entry");
-        sb.append("{postingDate=").append(postingDate);
-        sb.append(", amount=").append(amount);
-        sb.append(", fromAccount=").append(fromAccount.getName());
-        sb.append(", toAccount=").append(toAccount.getName());
-        sb.append(", status=").append(status);
-        sb.append('}');
-        return sb.toString();
-    }
 }

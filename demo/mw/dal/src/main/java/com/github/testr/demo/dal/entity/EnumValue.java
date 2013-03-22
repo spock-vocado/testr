@@ -1,5 +1,6 @@
 package com.github.testr.demo.dal.entity;
 
+import com.github.testr.demo.dal.util.AbstractBusinessEntity;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Column;
@@ -11,7 +12,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(name = "enum_value", uniqueConstraints = @UniqueConstraint(columnNames = {"enum_type_id", "name"}))
-public class EnumValue extends AbstractPersistable<Long> {
+public class EnumValue extends AbstractBusinessEntity {
 
     private static final long serialVersionUID = -2952735933715107252L;
 

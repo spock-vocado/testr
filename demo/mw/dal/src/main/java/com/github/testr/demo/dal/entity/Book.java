@@ -1,5 +1,6 @@
 package com.github.testr.demo.dal.entity;
 
+import com.github.testr.demo.dal.util.AbstractBusinessEntity;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.Column;
@@ -13,7 +14,7 @@ import javax.persistence.UniqueConstraint;
 @Table(name = "book", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"name", "user_id"})
 })
-public class Book extends AbstractPersistable<Long> {
+public class Book extends AbstractBusinessEntity {
 
     private static final long serialVersionUID = -2952735933715107252L;
 
@@ -40,12 +41,4 @@ public class Book extends AbstractPersistable<Long> {
         this.user = user;
     }
 
-    @Override
-    public String toString() {
-        final StringBuilder sb = new StringBuilder();
-        sb.append("Book");
-        sb.append("{name='").append(name).append('\'');
-        sb.append('}');
-        return sb.toString();
-    }
 }
