@@ -9,7 +9,7 @@
             http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <import resource="classpath:context-dal.xml"/>
-    <import resource="classpath:context-messaging.xml"/>
+    <!--<import resource="classpath:context-messaging.xml"/>-->
 
     <bean id="serviceProps"
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">

@@ -13,14 +13,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Abstract class for JPA entities that automatically support equals/hashCode() and toString()
+ * operations based on a list of business keys declared via @{@link BusinessEntity}.
+ * <p/>
+ * todo: ensure subclasses declare all business key of parents
+ */
+@SuppressWarnings("unchecked")
 public abstract class AbstractBusinessEntity extends AbstractPersistable<Long> {
 
-    private static final Map<String, EntityInfo> infoMap = new HashMap<>();
-
-    protected AbstractBusinessEntity() {
-        initEntityInfoIfNeeded(getClass());
-    }
+    private static final Map<String, EntityInfo> entityInfoMap = new ConcurrentHashMap<>();
+    private static final String PK_NAME = "id";
 
     @Override
     public boolean equals(Object o) {
@@ -30,10 +35,14 @@ public abstract class AbstractBusinessEntity extends AbstractPersistable<Long> {
         if (!(getClass().isInstance(o))) {
             return false;
         }
-        EntityInfo ei = getEntityInfoOrFail(getClass());
+        EntityInfo thisInfo = getEntityInfo(getClass());
+        EntityInfo otherInfo = getEntityInfo((Class<? extends AbstractBusinessEntity>) o.getClass());
+        if (!thisInfo.keysMatch(otherInfo)) {
+            return false;
+        }
         EqualsBuilder builder = new EqualsBuilder();
         try {
-            for (PropertyInfo pi : ei.keys) {
+            for (PropertyInfo pi : thisInfo.keys) {
                 builder.append(pi.getter.invoke(this), pi.getter.invoke(o));
             }
         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -44,7 +53,7 @@ public abstract class AbstractBusinessEntity extends AbstractPersistable<Long> {
 
     @Override
     public int hashCode() {
-        EntityInfo ei = getEntityInfoOrFail(getClass());
+        EntityInfo ei = getEntityInfo(getClass());
         HashCodeBuilder builder = new HashCodeBuilder();
         try {
             for (PropertyInfo pi : ei.keys) {
@@ -58,16 +67,16 @@ public abstract class AbstractBusinessEntity extends AbstractPersistable<Long> {
 
     @Override
     public String toString() {
-        EntityInfo ei = getEntityInfoOrFail(getClass());
+        EntityInfo ei = getEntityInfo(getClass());
         ToStringBuilder builder = new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE);
         try {
             builder.append(ei.pk.friendlyName(), ei.pk.getter.invoke(this));
             for (PropertyInfo pi : ei.keys) {
-                if (pi.name.equals("id")) continue;
+                if (pi.name.equals(PK_NAME)) continue;
                 builder.append(pi.friendlyName(), pi.getter.invoke(this));
             }
             for (PropertyInfo pi : ei.addToString) {
-                if (pi.name.equals("id")) continue;
+                if (pi.name.equals(PK_NAME)) continue;
                 builder.append(pi.friendlyName(), pi.getter.invoke(this));
             }
         } catch (IllegalAccessException | InvocationTargetException e) {
@@ -76,68 +85,117 @@ public abstract class AbstractBusinessEntity extends AbstractPersistable<Long> {
         return builder.toString();
     }
 
-    private static synchronized void initEntityInfoIfNeeded(Class<?> clazz) {
-        if (infoMap.containsKey(clazz.getName())) {
-            return;
+    /**
+     * Gets the information about an entity.
+     * <p/>
+     * Notes:
+     * <ul>
+     * <li>This method is thread-safe</li>
+     * <li>Entity information is constructed lazily and cached</li>
+     * <li>Because of the on-demand initialization, java serialization support is transparent</li>
+     * </ul>
+     *
+     * @param entityClass The entity class
+     * @return entity information (never <code>null</code>)
+     * @throws IllegalArgumentException if the entity information cannot be detected
+     */
+    private static EntityInfo getEntityInfo(Class<? extends AbstractBusinessEntity> entityClass) {
+        EntityInfo info = entityInfoMap.get(entityClass.getName());
+        if (info == null) {
+            return safeInitEntityInfo(entityClass);
         }
+        return info;
+    }
+
+    /**
+     * Initializes the information about an entity class.
+     * <p/>
+     * This method is thread-safe and idempotent.
+     *
+     * @param clazz The entity class
+     * @return entity information (will never be <code>null</code>)
+     * @throws IllegalArgumentException if the entity information cannot be constructed
+     */
+    private static synchronized EntityInfo safeInitEntityInfo(Class<? extends AbstractBusinessEntity> clazz) {
+        //
+        // [Step 1] Double check just in case something changed right before
+        // entering the synchronized block. This should happen only if multiple
+        // threads access the same entity for the same time, so it's very very rare
+        //
+        EntityInfo info = entityInfoMap.get(clazz.getName());
+        if (info != null) {
+            return info;
+        }
+        //
+        // [Step 2] Continue and initialize the entity information accordingly
+        //
+
+        // [Step 2.1] Detect parameters (assume default keys = {"id"})
         BusinessEntity ann = clazz.getAnnotation(BusinessEntity.class);
-        String[] keys;
-        String[] addToString;
+        String[] keyNames;
+        String[] addToStringNames;
         if (ann != null) {
-            keys = ann.keys();
-            addToString = ann.addToString();
+            keyNames = ann.keys();
+            addToStringNames = ann.addToString();
         } else {
-            keys = new String[]{"id"};
-            addToString = new String[0];
+            keyNames = new String[]{PK_NAME};
+            addToStringNames = new String[0];
         }
-        if (keys.length == 0) {
+        if (keyNames.length == 0) {
             throw new IllegalArgumentException("@BusinessKey requires at least one property name in " + clazz);
         }
+
+        // [Step 2.2] Initialize business keyPropList...
         Map<String, PropertyInfo> props = new HashMap<>();
-        EntityInfo info = new EntityInfo();
-        for (String prop : keys) {
+        List<PropertyInfo> keyPropList = new ArrayList<>();
+        List<PropertyInfo> addToStringPropList = new ArrayList<>();
+        PropertyInfo pkProp;
+        for (String prop : keyNames) {
             if (props.containsKey(prop)) {
                 throw new IllegalArgumentException("Property specified multiple times in " + clazz);
             }
             PropertyInfo pi = new PropertyInfo(findGetterOrFail(clazz, prop), prop, true);
             props.put(prop, pi);
-            info.keys.add(pi);
+            keyPropList.add(pi);
         }
-        for (String prop : addToString) {
+
+        // [Step 2.3] Initialize additional toString properties...
+        for (String prop : addToStringNames) {
             if (props.containsKey(prop)) {
                 throw new IllegalArgumentException("Property '" + prop + "' is specified multiple times in " + clazz);
             }
             PropertyInfo pi = new PropertyInfo(findGetterOrFail(clazz, prop), prop, false);
             props.put(prop, pi);
-            info.keys.add(pi);
+            addToStringPropList.add(pi);
         }
-        info.pk = props.get("id");
-        if (info.pk == null) {
-            info.pk = new PropertyInfo(findGetterOrFail(clazz, "id"), "id", false);
+
+        // [Step 2.4] Ensure the PK is also detected
+        pkProp = props.get(PK_NAME);
+        if (pkProp == null) {
+            pkProp = new PropertyInfo(findGetterOrFail(clazz, PK_NAME), PK_NAME, false);
         }
-        infoMap.put(clazz.getName(), info);
+
+        info = new EntityInfo(pkProp, keyPropList, addToStringPropList);
+        entityInfoMap.put(clazz.getName(), info);
+        return info;
     }
 
-    private static Method findGetterOrFail(Class<?> clazz, String k) {
-        final String suffix = Character.toUpperCase(k.charAt(0)) + k.substring(1);
+    private static Method findGetterOrFail(Class<?> clazz, String isBusinessKey) {
+        final String suffix = Character.toUpperCase(isBusinessKey.charAt(0)) + isBusinessKey.substring(1);
         Method m = ReflectionUtils.findMethod(clazz, "get" + suffix);
         if (m == null) {
             m = ReflectionUtils.findMethod(clazz, "is" + suffix);
         }
         if (m == null) {
-            throw new IllegalArgumentException("Could not find getter for property '" + k + "' in " + clazz);
+            throw new IllegalArgumentException("Could not find getter for property '"
+                    + isBusinessKey + "' in " + clazz);
         }
         return m;
     }
 
-    private static synchronized EntityInfo getEntityInfoOrFail(Class<?> clazz) {
-        EntityInfo info = infoMap.get(clazz.getName());
-        if (info == null) {
-            throw new IllegalArgumentException("Entity information for '" + clazz.getName() + " not available");
-        }
-        return info;
-    }
-
+    /**
+     * Immutable class that contains information about an entity field.
+     */
     private static class PropertyInfo {
         final Method getter;
         final String name;
@@ -155,10 +213,31 @@ public abstract class AbstractBusinessEntity extends AbstractPersistable<Long> {
 
     }
 
+    /**
+     * Immutable class that contains information about an entity.
+     */
     private static class EntityInfo {
-        PropertyInfo pk;
-        final List<PropertyInfo> keys = new ArrayList<>();
-        final List<PropertyInfo> addToString = new ArrayList<>();
+        final PropertyInfo pk;
+        final PropertyInfo[] keys;
+        final PropertyInfo[] addToString;
+
+        private EntityInfo(PropertyInfo pk, List<PropertyInfo> keys, List<PropertyInfo> addToString) {
+            this.pk = pk;
+            this.keys = keys.toArray(new PropertyInfo[keys.size()]);
+            this.addToString = addToString.toArray(new PropertyInfo[addToString.size()]);
+        }
+
+        public boolean keysMatch(EntityInfo other) {
+            if (keys.length != other.keys.length) {
+                return false;
+            }
+            for (int i = 0; i < keys.length; i++) {
+                if (!keys[i].name.equals(other.keys[i].name)) {
+                    return false;
+                }
+            }
+            return true;
+        }
     }
 
 }
