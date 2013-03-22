@@ -9,7 +9,7 @@ import static org.fest.assertions.api.Assertions.assertThat;
 import static org.springframework.test.util.ReflectionTestUtils.setField;
 
 @SuppressWarnings({"unchecked", "ObjectEqualsNull"})
-public class BusinessEntityTest {
+public class AbstractBusinessEntityTest {
 
     @Test
     public void testNullBusinessKeys_A() {

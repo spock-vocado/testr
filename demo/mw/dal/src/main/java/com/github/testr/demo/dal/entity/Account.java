@@ -1,6 +1,7 @@
 package com.github.testr.demo.dal.entity;
 
 import com.github.testr.demo.dal.util.AbstractBusinessEntity;
+import com.github.testr.demo.dal.util.BusinessEntity;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Parameter;
 import org.springframework.data.jpa.domain.AbstractPersistable;
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 @Table(name = "account", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"name", "book_id"})
 })
+@BusinessEntity(keys = {"name", "book"})
 public class Account extends AbstractBusinessEntity {
 
     private static final long serialVersionUID = -2952735933715107252L;

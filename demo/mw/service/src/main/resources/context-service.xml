@@ -8,8 +8,12 @@
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <!-- Module Dependencies -->
+
     <import resource="classpath:context-dal.xml"/>
     <import resource="classpath:context-messaging.xml"/>
+
+    <!-- Module Definitions -->
 
     <bean id="serviceProps"
           class="org.springframework.beans.factory.config.PropertiesFactoryBean">

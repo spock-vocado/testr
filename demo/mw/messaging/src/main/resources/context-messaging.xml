@@ -7,7 +7,7 @@
 
     <!-- Module Dependencies -->
 
-    <import resource="classpath:context-common.xml"/>
+    <import resource="classpath:context-resources.xml"/>
 
     <!-- Module Definitions -->
 
