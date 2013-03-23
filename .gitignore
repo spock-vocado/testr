@@ -4,4 +4,7 @@ target
 *.tlog
 *.tmp
 .idea
+*.ids
+*.ipr
+*.iws
 .DS_Store
