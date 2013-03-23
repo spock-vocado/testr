@@ -29,6 +29,53 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>releases.repository.jboss.org</id>
+            <name>JBoss Releases Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/releases</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>proxied.central.repository.jboss.org</id>
+            <name>Proxied JBoss Central Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/central</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>proxied.google.repository.jboss.org</id>
+            <name>Proxied JBoss Google Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/google</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>proxied.java.net.repository.jboss.org</id>
+            <name>Proxied JBoss Java.net Repository</name>
+            <url>https://repository.jboss.org/nexus/content/repositories/java.net-m2</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencyManagement>
         <dependencies>
 
@@ -129,7 +176,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-compiler-plugin</artifactId>
-                    <version>2.5.1</version>
+                    <version>3.0</version>
                     <configuration>
                         <source>1.7</source>
                         <target>1.7</target>
